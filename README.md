@@ -9,6 +9,16 @@ The case study examines how exceptions raised in fire-and-forget async tasks
 can become invisible to the spawning context, leading to violations of
 system-level correctness invariants in production systems.
 
+## Why this matters
+
+This repository documents a class of failure modes where asynchronous
+exception semantics violate system-level correctness invariants.
+The issue is not incorrect code, but a mismatch between developer mental
+models and the guarantees provided by async runtimes.
+
+In production systems, these semantic gaps can lead to silent data loss,
+financial inconsistencies, and delayed detection of critical failures.
+
 ## Overview
 
 - Domain: Distributed systems, async runtimes, system reliability
@@ -37,6 +47,12 @@ The failure mode:
 This repository is intentionally minimal.
 It is designed for clarity and reproducibility, not popularity.
 
+### Scope
+
+This is not a proposal to change Python or asyncio.
+It is a case study demonstrating how underspecified exception visibility
+can produce silent failures in high-throughput systems.
+
 ## Observed Behavior
 
 When running the reproduction script:
@@ -52,3 +68,5 @@ EVENT LOOP CAUGHT: ValueError('Transaction 5 exceeds limit')
 EVENT LOOP CAUGHT: ValueError('Transaction 10 exceeds limit')
 ...
 These exceptions are visible to the event loop but never propagate to the caller that confirmed the transactions. The system’s control flow remains unaware of the failures.
+
+
