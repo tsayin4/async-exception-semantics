@@ -36,3 +36,19 @@ The failure mode:
 
 This repository is intentionally minimal.
 It is designed for clarity and reproducibility, not popularity.
+
+## Observed Behavior
+
+When running the reproduction script:
+
+```bash
+The system reports all transactions as confirmed:
+
+User confirmations: 50
+However, the event loop logs multiple validation failures:
+
+EVENT LOOP CAUGHT: ValueError('Transaction 0 exceeds limit')
+EVENT LOOP CAUGHT: ValueError('Transaction 5 exceeds limit')
+EVENT LOOP CAUGHT: ValueError('Transaction 10 exceeds limit')
+...
+These exceptions are visible to the event loop but never propagate to the caller that confirmed the transactions. The system’s control flow remains unaware of the failures.
