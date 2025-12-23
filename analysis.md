@@ -1,4 +1,7 @@
- Silent Failures: Exception Semantics in Asynchronous Transaction Systems
+ This document explores how language-level exception semantics interact
+ with system-level correctness invariants in asynchronous transaction systems.
+
+  Silent Failures: Exception Semantics in Asynchronous Transaction Systems
 
  1. The Incident
 
